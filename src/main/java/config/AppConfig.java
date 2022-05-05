@@ -1,9 +1,9 @@
 package config;
 
-import controller.AdminController;
+import controller.RealEstateCompareController;
+import controller.RealEstateInfoController;
 import controller.Controller;
-import controller.ExitController;
-import controller.StudentController;
+import controller.RealEstateRecommendController;
 import network.ProtocolType;
 
 import java.util.HashMap;
@@ -23,13 +23,13 @@ public class AppConfig {
 
     private void initMappingMap(){
         // 매핑 맵에 프로토콜 코드와 컨트롤러 매핑
-        Controller adminController = new AdminController();
-        Controller exitController = new ExitController();
-        Controller studentController = new StudentController();
+        Controller realEstateInfoController = new RealEstateInfoController();
+        Controller realEstateCompareController = new RealEstateCompareController();
+        Controller realEstateRecommendController = new RealEstateRecommendController();
 
-        handlerMappingMap.put(ProtocolType.EXIT.getType(),exitController);
-        handlerMappingMap.put(ProtocolType.STUDENT.getType(), studentController);
-        handlerMappingMap.put(ProtocolType.ADMIN.getType(), adminController);
+        handlerMappingMap.put(ProtocolType.REAL_ESTATE_INFO.getType(),realEstateInfoController);
+        handlerMappingMap.put(ProtocolType.REAL_ESTATE_COMPARE.getType(), realEstateCompareController);
+        handlerMappingMap.put(ProtocolType.REAL_ESTATE_RECOMMEND.getType(), realEstateRecommendController);
 
     }
 }

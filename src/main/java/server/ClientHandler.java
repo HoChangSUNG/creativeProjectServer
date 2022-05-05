@@ -5,28 +5,25 @@ import lombok.extern.slf4j.Slf4j;
 import network.Packet;
 import network.ProtocolType;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.Map;
 
 @Slf4j
 public class ClientHandler extends Thread{
 
-    private Map<Byte, Controller> controllerMappingMap;
+    private final Map<Byte, Controller> controllerMappingMap;
     private Socket socket;
-    private InputStream is;
-    private OutputStream os;
+    private ObjectInputStream is;
+    private ObjectOutputStream os;
     private String uuid;
 
 
     public ClientHandler(Map<Byte, Controller> mapping, Socket socket, String uuid) throws IOException {
         this.controllerMappingMap = mapping;
         this.socket = socket;
-        is = socket.getInputStream();
-        os = socket.getOutputStream();
+        os = new ObjectOutputStream(socket.getOutputStream());
+        is = new ObjectInputStream(socket.getInputStream());
         this.uuid = uuid;
     }
 
@@ -36,33 +33,33 @@ public class ClientHandler extends Thread{
         Packet sendPacket = null;
 
         try{
-            log.info("client Handler 실행. handler ID = {}",uuid);
+            log.info("Client Handler 실행. Client handler ID = {}",uuid);
 
             while (true){
 
                 //클라이언트가 보낸 패킷 읽기
-                receivePacket = readPacket(is);
+                receivePacket = readPacket();
 
                 //protocolCode 확인
                 byte protocolCode = receivePacket.getProtocolType();
 
-                //protocolCode에 맞게 매핑된 컨트롤러 가져오기
+                //protocol Code에 맞게 매핑된 컨트롤러 가져오기
                 Controller controller = getController(protocolCode);
                 
-                //컨트롤러 실행
+                //컨트롤러 실행 후 전송할 패킷 받기
                 sendPacket = controller.process(receivePacket);
 
                 //클라이언트에게 패킷 보내기
-                writePacket(os,sendPacket);
+                writePacket(sendPacket);
             }
-        }catch(IOException e){
+        }catch(Exception e){
             e.printStackTrace();
         } finally {
             exit(); // socket 종료
             Server.deleteClientHandler(uuid);
         }
 
-        log.info("client Handler 종료. handler ID = {}",uuid);
+        log.info("Client Handler 종료. Client handler ID = {}",uuid);
     }
 
     private Controller getController(byte protocolCode) {
@@ -74,13 +71,15 @@ public class ClientHandler extends Thread{
         return controller;
     }
 
-    private Packet readPacket(InputStream is) throws IOException {
-        //패킷 읽기
-        //분할해서 넘어온 패킷 하나로 합치기
-        return new Packet();
+    private Packet readPacket() throws IOException, ClassNotFoundException {
+        Packet packet = (Packet)is.readObject();
+        return packet;
     }
 
-    private void writePacket(OutputStream os, Packet sendPacket) {
+    private void writePacket(Packet sendPacket) throws IOException {
+
+        os.writeObject(sendPacket);
+        os.flush();
         // 패킷 클라이언트에 보내기
         // 분할해야 하면 분할해서 보내기
     }

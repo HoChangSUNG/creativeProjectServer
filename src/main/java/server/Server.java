@@ -1,6 +1,5 @@
 package server;
 
-
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
@@ -70,10 +69,10 @@ public class Server {
     }
 
     public static synchronized void deleteClientHandler(String uuid){
-        log.info("핸들러 제거 시도 ID = {}",uuid);
+        log.info("Client handler 제거 시도 ID = {}",uuid);
         int curIndex = findHandlerIndex(uuid);
         if(curIndex<0){
-            log.warn("핸들러 제거 실패, 존재하지 않는 client handler, ID = {}",uuid);
+            log.warn("Client handler 제거 실패, 존재하지 않는 Client handler, Client handler ID = {}",uuid);
             return;
         }
 
@@ -83,6 +82,7 @@ public class Server {
 
         handlersIndex--;
         log.info("핸들러 제거 완료 ID = {}",uuid);
+
     }
 
     public static void main(String[] args) throws IOException {
