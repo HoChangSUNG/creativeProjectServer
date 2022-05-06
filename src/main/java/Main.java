@@ -7,5 +7,6 @@ public class Main {
 //        dbInit.initDetachedHouse();
 
         dbInit.initRegion();
+        dbInit.initPopulation();
     }
 }
