@@ -9,11 +9,11 @@ import network.ProtocolType;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AppConfig {
+public class HandlerMapping {
 
     private Map<Byte, Controller> handlerMappingMap = new HashMap<>();
 
-    public AppConfig() {
+    public HandlerMapping() {
         initMappingMap();
     }
 

@@ -6,7 +6,7 @@ build/
 !**/src/test/**/build/
 application.yml
 
-.src/main/resources/
+
 
 ### STS ###
 .apt_generated
@@ -38,3 +38,5 @@ out/
 
 ### VS Code ###
 .vscode/
+
+src/main/resources/config.xml

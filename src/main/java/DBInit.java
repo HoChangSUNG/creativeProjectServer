@@ -21,7 +21,7 @@ import java.util.List;
 public class DBInit {
 
     private Connection conn;
-    private String path = "C:/Users/82105/Desktop/df/newDongData.txt"; //
+    private String path = "C:/Users/82105/Desktop/df/newDongData.txt"; // 시도 시군구 법정동 인구수 및 지역코드 파일
 
     public DBInit() {
         try {
