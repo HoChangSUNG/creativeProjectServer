@@ -8,7 +8,7 @@ import java.net.SocketAddress;
 import java.util.Map;
 import java.util.UUID;
 
-import config.AppConfig;
+import config.HandlerMapping;
 import controller.Controller;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,8 +29,8 @@ public class Server {
         Socket socket = null; // 사용 포트 번호
         String handlerId = null; // 클라이언트 핸들러 ID
 
-        AppConfig appConfig = new AppConfig();
-        Map<Byte, Controller> mappingMap = appConfig.getMappingMap(); // handler mapping map 가져오기
+        HandlerMapping handlerMapping = new HandlerMapping();
+        Map<Byte, Controller> mappingMap = handlerMapping.getMappingMap(); // handler mapping map 가져오기
 
         ServerSocket serverSocket = new ServerSocket(); //서버 소켓 생성
         serverSocket.setReuseAddress(true);
