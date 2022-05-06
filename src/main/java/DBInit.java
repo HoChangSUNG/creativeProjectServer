@@ -21,14 +21,14 @@ import java.util.List;
 public class DBInit {
 
     private Connection conn;
-    private String path = "C:/Users/82105/Desktop/df/newDongData.txt";
+    private String path = "C:/Users/82105/Desktop/df/newDongData.txt"; //
 
     public DBInit() {
         try {
             conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/estate?serverTimezone=UTC", // url
-                    "root", // user
-                    "47024702" // password
+                    "", // url
+                    "", // user
+                    "" // password
             );
             conn.setAutoCommit(false);
         } catch (Exception e) {
