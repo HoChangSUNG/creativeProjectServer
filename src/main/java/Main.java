@@ -19,7 +19,7 @@ import java.util.List;
 @Slf4j
 public class Main {
     public static void main(String[] args) {
-        /*
+
         DBInit dbInit = new DBInit();
         dbInit.initRegion();
         dbInit.initPopulation();
@@ -33,7 +33,6 @@ public class Main {
         insertRowHouse(startDate,endDate,serviceKey,dbInit); // startDate ~ endDate 기간 동안의 전국 연립다세대 실거래 데이터 저장
         insertDetachedHouse(startDate,endDate,serviceKey,dbInit); // startDate ~ endDate 기간 동안의 전국 단독/다가구 실거래 데이터 저장
 
-        */
 
 ////       dbInit.initApartment(startDate,endDate,"11110",serviceKey);
 ////       dbInit.initRowHouse(startDate,endDate,"11110",serviceKey);

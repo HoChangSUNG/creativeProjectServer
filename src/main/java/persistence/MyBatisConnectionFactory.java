@@ -22,16 +22,6 @@ public class MyBatisConnectionFactory {
                 sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
                 Class[] mappers={
                         SidoMapper.class
-                        /*
-                        PeriodMapper.class,
-                        OpenLectureMapper.class,
-                        SyllabusMapper.class,
-                        SyllabusWeekInfoMapper.class,
-                        LectureHistoryMapper.class,
-                        LectureRoomByTimeMapper.class,
-                        LectureRoomMapper.class,
-                        LectureTimeMapper.class
-                        */
                         //mapper들  추가
                 };
                 for(Class mapper: mappers){
