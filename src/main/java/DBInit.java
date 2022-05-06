@@ -1,4 +1,5 @@
 import domain.Population;
+import lombok.extern.slf4j.Slf4j;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -14,7 +15,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+@Slf4j
 public class DBInit {
 
     private Connection conn;
@@ -22,9 +23,9 @@ public class DBInit {
     public DBInit() {
         try {
             conn = DriverManager.getConnection(
-                    "", // url
-                    "", // user
-                    "" // password
+                    "jdbc:mysql://localhost:3306/estate?serverTimezone=UTC", // url
+                    "root", // user
+                    "47024702" // password
             );
             conn.setAutoCommit(false);
         } catch (Exception e) {
@@ -365,9 +366,10 @@ public class DBInit {
                 }
             }
         }
+        log.info("시도, 시군구별 지역코드, 법정동 이름 저장 완료");
     }
 
-    private List<Population> getPopulationDTOS() {
+    public List<Population> getPopulationDTOS() { // 법정동별 인구수 계산
         ArrayList<Population> populationDTOS = new ArrayList<>();
 
         File file = new File("src/main/resources/code.txt"); // 법정동 인구 수 파일 경로
@@ -381,9 +383,9 @@ public class DBInit {
                 //System.out.println(line);
                 String[] split = line.split("\t");
 
-                int regionalCode = Integer.parseInt(split[0].trim())/100000;
-                String dongName = split[3].trim();
-                int population = Integer.parseInt(split[4].trim());
+                int regionalCode = Integer.parseInt(split[0].trim().substring(0,5)); //지역코드 5자리만 추출
+                String dongName = split[3].trim(); //동이름 추출
+                int population = Integer.parseInt(split[4].trim()); //인구수 추출
 
                 Population populationDTO = new Population(String.valueOf(regionalCode), dongName, population);
 
@@ -410,5 +412,36 @@ public class DBInit {
         return populationDTOS;
     }
 
+    public void initPopulation(){
+        List<Population> populationDTOS = getPopulationDTOS();
+        PreparedStatement pstmt = null;
+        try{
+            pstmt =  conn.prepareStatement("insert into population values(?, ?, ?)");
+            for (Population population : populationDTOS) {
+                pstmt.setString(1, population.getRegionName()); // 읍면동 이름
+                pstmt.setString(2, population.getRegionalCode()); // 읍면동 이름
+                pstmt.setInt(3,population.getPopulation()); //읍면동별 인구수
+                pstmt.addBatch();
+            }
+            pstmt.executeBatch();
+            conn.commit();
+            pstmt.clearBatch();
 
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                conn.rollback();
+            } catch (SQLException e2) {
+                e2.printStackTrace();
+            }
+        } finally {
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException e3){
+                }
+            }
+        }
+        log.info("법정동별 인구수 저장 완료");
+    }
 }

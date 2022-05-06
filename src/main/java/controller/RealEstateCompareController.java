@@ -1,6 +1,5 @@
 package controller;
 
-import dto.ExitTestDTO;
 import lombok.extern.slf4j.Slf4j;
 import network.Packet;
 import network.ProtocolType;
