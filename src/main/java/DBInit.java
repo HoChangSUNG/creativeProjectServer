@@ -1,4 +1,5 @@
 import domain.Population;
+import domain.Sigungu;
 import lombok.extern.slf4j.Slf4j;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -19,6 +20,7 @@ import java.util.List;
 public class DBInit {
 
     private Connection conn;
+    private String path = "C:/Users/82105/Desktop/df/newDongData.txt";
 
     public DBInit() {
         try {
@@ -281,8 +283,51 @@ public class DBInit {
         }
     }
 
+    public  List<Sigungu> getSigungu(){
+        ArrayList<String> input = new ArrayList<>();
+        List<Sigungu> sigungus = new ArrayList<>();
+        String[] input_arr = new String[0];
+        BufferedReader br = null;
+        String[] eupmyeondong;
+        String[] sigungu;
+        String[] sido;
+
+        try {
+            br = new BufferedReader(new FileReader(new File(path)));
+            String s;
+            while ((s = br.readLine()) != null) {
+                input.add(s);
+            }
+            br.close();
+
+            input_arr = input.toArray(input_arr);
+
+            eupmyeondong = new String[input_arr.length];
+            sigungu = new String[input_arr.length];
+            sido = new String[input_arr.length];
+
+            for (int i = 0; i < input_arr.length; i++) {
+                String[] arr = input_arr[i].split("\t");
+
+                sigungu[i] = arr[0].substring(0, 5) + " " + arr[2];
+            }
+
+            sigungu = Arrays.stream(sigungu).distinct().toArray(String[]::new);
+            for (String a : sigungu) {
+                String[] sgg = a.split(" ");
+                if(sgg.length==2)
+                    sigungus.add( new Sigungu(sgg[0],sgg[1]));
+                else
+                    sigungus.add( new Sigungu(sgg[0],sgg[1]+" "+sgg[2]));
+            }
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return sigungus;
+    }
     public void initRegion() {
-        String path = "src/main/resources/code.txt";
         ArrayList<String> input = new ArrayList<>();
         String[] input_arr = new String[0];
         BufferedReader br = null;
@@ -334,7 +379,10 @@ public class DBInit {
             for (String a : sigungu) {
                 String[] sgg = a.split(" ");
                 pstmt.setString(1, sgg[0]);
-                pstmt.setString(2, sgg[1]);
+                if(sgg.length==2)
+                    pstmt.setString(2, sgg[1]);
+                else
+                    pstmt.setString(2, sgg[1]+" "+sgg[2]);
                 pstmt.addBatch();
             }
             pstmt.executeBatch();
@@ -372,7 +420,7 @@ public class DBInit {
     public List<Population> getPopulationDTOS() { // 법정동별 인구수 계산
         ArrayList<Population> populationDTOS = new ArrayList<>();
 
-        File file = new File("src/main/resources/code.txt"); // 법정동 인구 수 파일 경로
+        File file = new File(path); // 법정동 인구 수 파일 경로
 
         try {
             BufferedReader inFiles = new BufferedReader(new InputStreamReader(new FileInputStream(file.getAbsolutePath()), "UTF8"));
