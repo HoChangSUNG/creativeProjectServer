@@ -25,8 +25,9 @@ public class DBInit {
 
     public DBInit() {
         try {
+            Class.forName("net.sf.log4jdbc.sql.jdbcapi.DriverSpy");
             conn = DriverManager.getConnection(
-                    "", // url
+                    "jdbc:log4jdbc:mysql://localhost:3306/estate?serverTimezone=UTC", // url
                     "", // user
                     "" // password
             );
@@ -85,7 +86,7 @@ public class DBInit {
                         pstmt.setFloat(7, Float.parseFloat(getTagValue("전용면적", element).trim()));
                         pstmt.setInt(8, Integer.parseInt(getTagValue("층", element).trim()));
                         pstmt.setString(9, getTagValue("지번", element).trim());
-                        pstmt.setString(10, (getTagValue("법정동", element).trim()));
+                        pstmt.setString(10, (getTagValue("법정동", element).trim().split(" ")[0]));
                         pstmt.setString(11, (getTagValue("지역코드", element).trim()));
 
                         pstmt.addBatch();
@@ -163,7 +164,7 @@ public class DBInit {
                         pstmt.setFloat(7, Float.parseFloat(getTagValue("전용면적", element).trim()));
                         pstmt.setInt(8, Integer.parseInt(getTagValue("층", element).trim()));
                         pstmt.setString(9, getTagValue("지번", element).trim());
-                        pstmt.setString(10, (getTagValue("법정동", element).trim()));
+                        pstmt.setString(10, (getTagValue("법정동", element).trim().split(" ")[0]));
                         pstmt.setString(11, (getTagValue("지역코드", element).trim()));
 
                         pstmt.addBatch();
@@ -234,7 +235,7 @@ public class DBInit {
                         pstmt.setInt(5, Integer.parseInt(getTagValue("일", element).trim()));
                         pstmt.setString(6, (getTagValue("주택유형", element).trim()));
                         pstmt.setFloat(7, Float.parseFloat(getTagValue("연면적", element).trim()));
-                        pstmt.setString(8, (getTagValue("법정동", element).trim()));
+                        pstmt.setString(8, (getTagValue("법정동", element).trim().split(" ")[0]));
                         pstmt.setString(9, (getTagValue("지역코드", element).trim()));
 
                         pstmt.addBatch();
@@ -268,7 +269,7 @@ public class DBInit {
 
     }
 
-    public  List<Sigungu> getSigungu(){
+    public  List<Sigungu> getSigungu(){ // 시군구 이름,지역 코드 얻기(대현이형 코드 사용)
         ArrayList<String> input = new ArrayList<>();
         List<Sigungu> sigungus = new ArrayList<>();
         String[] input_arr = new String[0];
@@ -312,7 +313,7 @@ public class DBInit {
 
         return sigungus;
     }
-    public void initRegion() {
+    public void initRegion() {// 시도,시군구,법정동 데이터 저장
         ArrayList<String> input = new ArrayList<>();
         String[] input_arr = new String[0];
         BufferedReader br = null;
@@ -444,7 +445,7 @@ public class DBInit {
         return populationDTOS;
     }
 
-    public void initPopulation() {
+    public void initPopulation() {// 읍면동 별 인구수 저장
         List<Population> populationDTOS = getPopulationDTOS();
         PreparedStatement pstmt = null;
         try {
