@@ -24,8 +24,8 @@ public class Main {
         dbInit.initRegion();
         dbInit.initPopulation();
 
-        LocalDate startDate = LocalDate.of(2022, 1, 1); // dayOfMonth는 무조건 1로 설정
-        LocalDate endDate = LocalDate.of(2022,5,1); // dayOfMonth는 무조건 1로 설정
+        LocalDate startDate = LocalDate.of(2022, 3, 1); // dayOfMonth는 무조건 1로 설정
+        LocalDate endDate = LocalDate.of(2022,4,1); // dayOfMonth는 무조건 1로 설정
         String serviceKey = ""; //인증키 번호
 
 
@@ -38,7 +38,7 @@ public class Main {
 ////       dbInit.initRowHouse(startDate,endDate,"11110",serviceKey);
 ////       dbInit.initDetachedHuse(startDate,endDate,"11110", serviceKey);
 
-        annotationBaseCode(); //어노테이션 기반 mybatis 테스트(시도 테이블 전체 출력)
+        //annotationBaseCode(); //어노테이션 기반 mybatis 테스트(시도 테이블 전체 출력)
 
     }
 
@@ -49,6 +49,7 @@ public class Main {
             log.info("지역코드={} 시군구={}",sigungu.getRegionalCode(),sigungu.getRegionName());
                 dbInit.initApartment(startDate,endDate,sigungu.getRegionalCode(),serviceKey);
         }
+
     }
 
     public static void insertRowHouse(LocalDate startDate,LocalDate endDate,String serviceKey,DBInit dbInit){
