@@ -10,9 +10,13 @@ import java.util.List;
 public interface SidoMapper {
 
     @Select("SELECT * FROM SIDO order by region_name asc")
-    @Results(id="periodResultSet",value={
+    @Results(id="SidoSet",value={
             @Result(property = "regionalCode",column = "regional_code"),
             @Result(property = "regionName",column = "region_name"),
+            @Result(property = "average",column = "average"),
+            @Result(property = "population",column = "population")
+
     })
     List<Sido> findAllSido();
 }
+

@@ -21,15 +21,19 @@ import java.util.List;
 public class DBInit {
 
     private Connection conn;
-    private String path = "C:/Users/82105/Desktop/df/newDongData.txt"; // 시도 시군구 법정동 인구수 및 지역코드 파일
+    private String path = "C:\\Users\\tbqkd\\OneDrive\\바탕 화면\\자료\\newDongData.txt"; // 시도 시군구 법정동 인구수 및 지역코드 파일
+    private String path1 = "C:\\Users\\tbqkd\\OneDrive\\바탕 화면\\자료\\apartment_2022.txt";
+    private String path2= "C:\\Users\\tbqkd\\OneDrive\\바탕 화면\\자료\\rowhouse_2022.txt";
+    private String path3= "C:\\Users\\tbqkd\\OneDrive\\바탕 화면\\자료\\detachedhouse_2022.txt";
 
     public DBInit() {
         try {
+
             Class.forName("net.sf.log4jdbc.sql.jdbcapi.DriverSpy");
             conn = DriverManager.getConnection(
-                    "jdbc:log4jdbc:mysql://localhost:3306/estate?serverTimezone=UTC", // url
-                    "", // user
-                    "" // password
+                    "jdbc:log4jdbc:mysql://localhost:3306/real_estate?serverTimezone=UTC", // url
+                    "root", // user
+                    "rkdeogus1128" // password
             );
             conn.setAutoCommit(false);
         } catch (Exception e) {
@@ -313,6 +317,120 @@ public class DBInit {
 
         return sigungus;
     }
+    public void initHouse() {// 실거래 데이터 저장
+        ArrayList<String> input1 = new ArrayList<>();
+        ArrayList<String> input2 = new ArrayList<>();
+        ArrayList<String> input3 = new ArrayList<>();
+        BufferedReader br = null;
+        String[] apartment = new String[0];
+        String[] rowhouse = new String[0];
+        String[] detachedhouse = new String[0];
+
+        PreparedStatement pstmt = null;
+
+        try {
+            br = new BufferedReader(new FileReader(new File(path1)));
+            String s1;
+            while ((s1 = br.readLine()) != null) {
+                input1.add(s1);
+            }
+            br.close();
+            apartment = input1.toArray(apartment);
+
+            br = new BufferedReader(new FileReader(new File(path2)));
+            String s2;
+            while ((s2 = br.readLine()) != null) {
+                input2.add(s2);
+            }
+            br.close();
+            rowhouse = input2.toArray(rowhouse);
+
+            br = new BufferedReader(new FileReader(new File(path3)));
+            String s3;
+            while ((s3 = br.readLine()) != null) {
+                input3.add(s3);
+            }
+            br.close();
+            detachedhouse = input3.toArray(detachedhouse);
+
+            pstmt = conn.prepareStatement("insert into apartment(deal_amount, build_year, deal_year, deal_month, deal_day, apartment_name, area, floor, jibun, region_name,regional_code) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            for (String a : apartment) {
+                String[] sd = a.split("\t");
+
+                pstmt.setInt(1, Integer.parseInt(sd[1]));
+                pstmt.setInt(2, Integer.parseInt(sd[2]));
+                pstmt.setInt(3, Integer.parseInt(sd[3]));
+                pstmt.setInt(4, Integer.parseInt(sd[4]));
+                pstmt.setInt(5, Integer.parseInt(sd[5]));
+                pstmt.setString(6, sd[6]);
+                pstmt.setFloat(7, Float.parseFloat(sd[7]));
+                pstmt.setInt(8, Integer.parseInt(sd[8]));
+                pstmt.setString(9, sd[9]);
+                pstmt.setString(10, sd[10]);
+                pstmt.setString(11, sd[11]);
+                pstmt.addBatch();
+            }
+            pstmt.executeBatch();
+            conn.commit();
+            pstmt.clearBatch();
+
+            pstmt = conn.prepareStatement("insert into rowhouse(deal_amount, build_year, deal_year, deal_month, deal_day, rowhouse_name, area, floor, jibun, region_name,regional_code) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            for (String a : rowhouse) {
+                String[] sd = a.split("\t");
+                pstmt.setInt(1, Integer.parseInt(sd[1]));
+                pstmt.setInt(2, Integer.parseInt(sd[2]));
+                pstmt.setInt(3, Integer.parseInt(sd[3]));
+                pstmt.setInt(4, Integer.parseInt(sd[4]));
+                pstmt.setInt(5, Integer.parseInt(sd[5]));
+                pstmt.setString(6, sd[6]);
+                pstmt.setFloat(7, Float.parseFloat(sd[7]));
+                pstmt.setInt(8, Integer.parseInt(sd[8]));
+                pstmt.setString(9, sd[9]);
+                pstmt.setString(10, sd[10]);
+                pstmt.setString(11, sd[11]);
+                pstmt.addBatch();
+            }
+            pstmt.executeBatch();
+            conn.commit();
+            pstmt.clearBatch();
+
+            pstmt = conn.prepareStatement("insert into detachedhouse(deal_amount, build_year, deal_year, deal_month, deal_day, house_type, area, region_name,regional_code) values(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            for (String a : detachedhouse) {
+                String[] sd = a.split("\t");
+
+                pstmt.setInt(1, Integer.parseInt(sd[1]));
+                pstmt.setInt(2, Integer.parseInt(sd[2]));
+                pstmt.setInt(3, Integer.parseInt(sd[3]));
+                pstmt.setInt(4, Integer.parseInt(sd[4]));
+                pstmt.setInt(5, Integer.parseInt(sd[5]));
+                pstmt.setString(6, sd[6]);
+                pstmt.setFloat(7, Float.parseFloat(sd[7]));
+                pstmt.setString(8, sd[8]);
+                pstmt.setString(9, sd[9]);
+
+                pstmt.addBatch();
+            }
+            pstmt.executeBatch();
+            conn.commit();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                conn.rollback();
+            } catch (SQLException e2) {
+                e2.printStackTrace();
+            }
+        } finally {
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException e3) {
+                }
+            }
+        }
+        log.info("실거래 정보 저장 완료");
+    }
+
     public void initRegion() {// 시도,시군구,법정동 데이터 저장
         ArrayList<String> input = new ArrayList<>();
         String[] input_arr = new String[0];

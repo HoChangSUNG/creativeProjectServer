@@ -1,19 +1,11 @@
-
 import domain.Sido;
 import domain.Sigungu;
-import jdk.swing.interop.SwingInterOpUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import persistence.MyBatisConnectionFactory;
 import persistence.dao.SidoDAO;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
 
 @Slf4j
@@ -21,24 +13,26 @@ public class Main {
     public static void main(String[] args) {
 
         DBInit dbInit = new DBInit();
-        dbInit.initRegion();
-        dbInit.initPopulation();
+        //dbInit.initRegion();
+        //dbInit.initPopulation();
+//
+//        LocalDate startDate = LocalDate.of(2022, 3, 1); // dayOfMonth는 무조건 1로 설정
+//        LocalDate endDate = LocalDate.of(2022,4,1); // dayOfMonth는 무조건 1로 설정
+//        String serviceKey = ""; //인증키 번호
 
-        LocalDate startDate = LocalDate.of(2022, 3, 1); // dayOfMonth는 무조건 1로 설정
-        LocalDate endDate = LocalDate.of(2022,4,1); // dayOfMonth는 무조건 1로 설정
-        String serviceKey = ""; //인증키 번호
 
-
-        insertApartmentData(startDate,endDate,serviceKey,dbInit); // startDate ~ endDate 기간 동안의 전국 아파트 실거래 데이터 저장
-        insertRowHouse(startDate,endDate,serviceKey,dbInit); // startDate ~ endDate 기간 동안의 전국 연립다세대 실거래 데이터 저장
-        insertDetachedHouse(startDate,endDate,serviceKey,dbInit); // startDate ~ endDate 기간 동안의 전국 단독/다가구 실거래 데이터 저장
+//        insertApartmentData(startDate,endDate,serviceKey,dbInit); // startDate ~ endDate 기간 동안의 전국 아파트 실거래 데이터 저장
+//        insertRowHouse(startDate,endDate,serviceKey,dbInit); // startDate ~ endDate 기간 동안의 전국 연립다세대 실거래 데이터 저장
+//        insertDetachedHouse(startDate,endDate,serviceKey,dbInit); // startDate ~ endDate 기간 동안의 전국 단독/다가구 실거래 데이터 저장
 
 
 ////       dbInit.initApartment(startDate,endDate,"11110",serviceKey);
 ////       dbInit.initRowHouse(startDate,endDate,"11110",serviceKey);
-////       dbInit.initDetachedHuse(startDate,endDate,"11110", serviceKey);
+////       dbInit.initDetachedHouse(startDate,endDate,"11110", serviceKey);
 
-        //annotationBaseCode(); //어노테이션 기반 mybatis 테스트(시도 테이블 전체 출력)
+        //dbInit.initHouse();
+
+       //annotationBaseCode(); //어노테이션 기반 mybatis 테스트(시도 테이블 전체 출력)
 
     }
 

@@ -20,4 +20,6 @@ public class Apartment {
     private int floor;
     private String jibun;
     private String regionalCode;
+
+
 }
