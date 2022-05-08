@@ -32,8 +32,8 @@ public class DBInit {
             Class.forName("net.sf.log4jdbc.sql.jdbcapi.DriverSpy");
             conn = DriverManager.getConnection(
                     "jdbc:log4jdbc:mysql://localhost:3306/real_estate?serverTimezone=UTC", // url
-                    "root", // user
-                    "rkdeogus1128" // password
+                    "", // user
+                    "" // password
             );
             conn.setAutoCommit(false);
         } catch (Exception e) {
