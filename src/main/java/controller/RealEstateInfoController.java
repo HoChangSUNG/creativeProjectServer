@@ -43,7 +43,7 @@ public class RealEstateInfoController implements Controller{
 
         LocalDate now = LocalDate.now();
         int year = now.getYear();
-        int month = now.getMonthValue();
+        int month = now.getMonthValue()-1;
 
         List<FluctuationRate> list2 = averageDataService.findFluctuationLateByDate(year, month);
 
