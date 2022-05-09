@@ -10,9 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import network.Packet;
 import network.ProtocolType;
 import network.protocolCode.RealEstateInfoCode;
-import org.apache.ibatis.session.SqlSessionFactory;
-import persistence.MyBatisConnectionFactory;
-import persistence.dao.AverageDataDAO;
 import service.AverageDataService;
 
 import java.util.List;
@@ -50,14 +47,10 @@ public class RealEstateInfoController implements Controller{
         int year = now.getYear();
         int month = now.getMonthValue();
 
-        List<AverageData> list1 = averageDataService.findAverageDataByDate(year,month);
-        List<FluctuationLate> list2 = averageDataService.findFluctuationLateByDAte(year, month);
+        List<FluctuationLate> list2 = averageDataService.findFluctuationLateByDate(year, month);
 
-        SendDataResBody body = new SendDataResBody();
-        body.setAverageDataList(list1);
-        body.setFluctuationLateList(list2);
 
-        Packet packet = new Packet(protocolType,ProtocolCode,body);
+        Packet packet = new Packet(protocolType,ProtocolCode,list2);
         return packet;
     }
 
