@@ -2,11 +2,13 @@ package domain;
 
 import lombok.*;
 
+import java.io.Serializable;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class AverageData {
+public class AverageData implements Serializable {
 
     private String sidoName;
     private String sigunguName;
