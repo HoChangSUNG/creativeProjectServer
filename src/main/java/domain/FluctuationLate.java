@@ -10,12 +10,18 @@ import java.io.Serializable;
 @Setter
 @ToString
 public class FluctuationLate implements Serializable,Comparable<FluctuationLate> {
-    private String sidoName;
-    private String sigunguName;
-    private String dongName;
+    private String regionName;
+    private String regionalCode;
     private float fluctuationLateData;
     private int population;
     private int price;
+
+    public FluctuationLate(String regionalCode, float fluctuationLateData, int price) {
+        this.regionalCode = regionalCode;
+        this.fluctuationLateData = fluctuationLateData;
+        this.price = price;
+    }
+
     @Override
     public int compareTo(FluctuationLate o) {
         if(this.fluctuationLateData>o.fluctuationLateData){
