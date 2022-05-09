@@ -21,17 +21,17 @@ import java.util.List;
 public class DBInit {
 
     private Connection conn;
-    private String path = "C:\\Users\\tbqkd\\OneDrive\\바탕 화면\\자료\\newDongData.txt"; // 시도 시군구 법정동 인구수 및 지역코드 파일
-    private String path1 = "C:\\Users\\tbqkd\\OneDrive\\바탕 화면\\자료\\apartment_2022.txt";
-    private String path2= "C:\\Users\\tbqkd\\OneDrive\\바탕 화면\\자료\\rowhouse_2022.txt";
-    private String path3= "C:\\Users\\tbqkd\\OneDrive\\바탕 화면\\자료\\detachedhouse_2022.txt";
+    private String path = ""; // 시도 시군구 법정동 인구수 및 지역코드 파일
+    private String path1 = "";
+    private String path2= "";
+    private String path3= "";
 
     public DBInit() {
         try {
 
             Class.forName("net.sf.log4jdbc.sql.jdbcapi.DriverSpy");
             conn = DriverManager.getConnection(
-                    "jdbc:log4jdbc:mysql://localhost:3306/real_estate?serverTimezone=UTC", // url
+                    "jdbc:log4jdbc:mysql://localhost:3306/realestate?serverTimezone=UTC", // url
                     "", // user
                     "" // password
             );

@@ -1,12 +1,10 @@
-import domain.AverageData;
-import domain.FluctuationLate;
-import domain.Sido;
-import domain.Sigungu;
+import domain.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import persistence.MyBatisConnectionFactory;
 import persistence.dao.AverageDataDAO;
 import persistence.dao.SidoDAO;
+import persistence.dao.SigunguDAO;
 import service.AverageDataService;
 
 import java.time.LocalDate;
@@ -41,12 +39,12 @@ public class Main {
 
 
         SqlSessionFactory sqlSessionFactory = MyBatisConnectionFactory.getSqlSessionFactory();
-        AverageDataDAO averageDataDAO = new AverageDataDAO(sqlSessionFactory);
-        AverageDataService averageDataService = new AverageDataService(averageDataDAO);
-        List<FluctuationLate> fluctuationLateByDate = averageDataService.findFluctuationLateByDate(2022, 4);
-        for (FluctuationLate fluctuationLate : fluctuationLateByDate) {
-            System.out.println(fluctuationLate);
-        }
+//        AverageDataDAO averageDataDAO = new AverageDataDAO(sqlSessionFactory);
+//        AverageDataService averageDataService = new AverageDataService(averageDataDAO);
+//        List<FluctuationLate> fluctuationLateByDate = averageDataService.findFluctuationLateByDate(2022, 4);
+//        for (FluctuationLate fluctuationLate : fluctuationLateByDate) {
+//            System.out.println(fluctuationLate);
+//        }
     }
 
     public static void insertApartmentData(LocalDate startDate,LocalDate endDate,String serviceKey,DBInit dbInit){

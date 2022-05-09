@@ -1,6 +1,7 @@
 package persistence.mapper;
 
 import domain.Sido;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
@@ -16,5 +17,14 @@ public interface SidoMapper {
 
     })
     List<Sido> findAllSido();
+
+    @Select("SELECT region_name FROM sigungu WHERE regional_code=#{regionalCode}")
+    String findSigunguName(@Param("regionalCode") String regionalCode);
+
+    @Select("SELECT region_name FROM sido WHERE regional_code=#{regionalCode}")
+    String findSidoName(@Param("regionalCode") String regionalCode);
+
+    @Select("SELECT sum(population) FROM population WHERE regional_code=#{regionalCode} GROUP BY regional_code")
+    int findPopulation(@Param("regionalCode") String regionalCode);
 }
 
