@@ -8,8 +8,9 @@ import lombok.ToString;
 @NoArgsConstructor
 public class AverageData {
 
-    private String regionName;
-    private String regionalCode;
+    private String sidoName;
+    private String sigunguName;
+    private String dongName;
     private int average;
     private int population;
 

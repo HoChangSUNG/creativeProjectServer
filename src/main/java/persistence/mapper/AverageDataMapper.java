@@ -10,46 +10,43 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
 public interface AverageDataMapper {
-    @Select("select total.region_name, total.regional_code, ifnull(floor(sum(price_sum)/sum(price_cnt)),0) average, p.population population" +
-            " from" +
-            " (" +
-            "select b.region_name, b.regional_code, ifnull(s,0) price_sum, ifnull(c,0) price_cnt" +
-            " from (" +
-            "select sum(deal_amount) s,count(deal_amount) c ,regional_code,region_name" +
-            " from apartment" +
-            " where deal_year=#{year} and deal_month=#{month}" +
-            " group by regional_code, region_name) a " +
-            " right outer join eupmyeondong b " +
-            " on ( a.regional_code = b.regional_code and a.region_name=b.region_name)" +
-            " union all" +
-            " select b.region_name, b.regional_code, ifnull(s,0) price_sum, ifnull(c,0) price_cnt" +
-            " from (" +
-            " select sum(deal_amount) s,count(deal_amount) c ,regional_code,region_name " +
-            " from rowhouse " +
-            " where deal_year=#{year} and deal_month=#{month}" +
-            " group by regional_code, region_name) a" +
-            " right outer join eupmyeondong b " +
-            " on ( a.regional_code = b.regional_code and a.region_name=b.region_name)" +
-            " union all" +
-            " select b.region_name, b.regional_code, ifnull(s,0) price_sum, ifnull(c,0) price_cnt" +
-            " from (" +
-            " select sum(deal_amount) s,count(deal_amount) c ,regional_code,region_name" +
-            " from detachedhouse" +
-            " where deal_year=#{year} and deal_month=#{month}" +
-            " group by regional_code, region_name) a" +
-            " right outer join eupmyeondong b" +
-            " on ( a.regional_code = b.regional_code and a.region_name=b.region_name)) total" +
-            " join population p on total.region_name = p.region_name and total.regional_code=p.regional_code" +
-            " group by regional_code,region_name"+
-            " order by regional_code, region_name;"
+    @Select("select total.region_name dongName,sigun.region_name sigunguName, sido.region_name sido_name, ifnull(floor(sum(price_sum)/sum(price_cnt)),0) average, p.population population\n" +
+            "from\n" +
+            "(\n" +
+            "select b.region_name, b.regional_code, ifnull(s,0) price_sum, ifnull(c,0) price_cnt from (\n" +
+            "              select sum(deal_amount) s,count(deal_amount) c ,regional_code,region_name \n" +
+            "               from apartment \n" +
+            "               where deal_year=2022 and deal_month=3 \n" +
+            "               group by regional_code, region_name)\n" +
+            "               a right outer join eupmyeondong b \n" +
+            "               on ( a.regional_code = b.regional_code and a.region_name=b.region_name)\n" +
+            "union all\n" +
+            "select b.region_name, b.regional_code, ifnull(s,0) price_sum, ifnull(c,0) price_cnt from (\n" +
+            "              select sum(deal_amount) s,count(deal_amount) c ,regional_code,region_name \n" +
+            "               from rowhouse \n" +
+            "               where deal_year=2022 and deal_month=3 \n" +
+            "               group by regional_code, region_name)\n" +
+            "               a right outer join eupmyeondong b \n" +
+            "               on ( a.regional_code = b.regional_code and a.region_name=b.region_name)\n" +
+            "union all\n" +
+            "select b.region_name, b.regional_code, ifnull(s,0) price_sum, ifnull(c,0) price_cnt from (\n" +
+            "              select sum(deal_amount) s,count(deal_amount) c ,regional_code,region_name \n" +
+            "               from detachedhouse \n" +
+            "               where deal_year=2022 and deal_month=3 \n" +
+            "               group by regional_code, region_name)\n" +
+            "               a right outer join eupmyeondong b \n" +
+            "               on ( a.regional_code = b.regional_code and a.region_name=b.region_name)) total\n" +
+            "               join population p on total.region_name = p.region_name and total.regional_code=p.regional_code\n" +
+            "               join sigungu sigun on total.regional_code=sigun.regional_code\n" +
+            "               join sido on sido.regional_code = left(total.regional_code,2)\n" +
+            "group by total.regional_code, total.region_name;"
     )
     @Results(id="AverageDataSet",value={
-            @Result(property = "regionalCode",column = "regional_code"),
-            @Result(property = "regionName",column = "region_name"),
+            @Result(property = "sidoName",column = "sido_name"),
+            @Result(property = "sigunguName",column = "sigungu_name"),
+            @Result(property = "dongName",column = "dong_name"),
             @Result(property = "average",column = "average"),
             @Result(property = "population",column = "population")
     })
     List<AverageData> findByDate(@Param("year") String year, @Param("month") String month);
 }
-
-

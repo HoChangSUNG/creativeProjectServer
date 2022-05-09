@@ -13,6 +13,7 @@ public interface SidoMapper {
     @Results(id="SidoSet",value={
             @Result(property = "regionalCode",column = "regional_code"),
             @Result(property = "regionName",column = "region_name"),
+
     })
     List<Sido> findAllSido();
 }
