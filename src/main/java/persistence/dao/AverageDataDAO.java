@@ -14,13 +14,13 @@ import java.util.List;
 public class AverageDataDAO {
     private final SqlSessionFactory sqlSessionFactory ;
 
-    public List<AverageData> findByDate(int year,int month){
+    public List<AverageData> findApartmentByDate(int year,int month){
         List<AverageData> list = null;
         SqlSession session = sqlSessionFactory.openSession();
         AverageDataMapper mapper = session.getMapper(AverageDataMapper.class);
 
         try{
-            list=mapper.findByDate(String.valueOf(year),String.valueOf(month));
+            list=mapper.findApartmentByDate(String.valueOf(year),String.valueOf(month));
             session.commit();
         }catch(Exception e){
             e.printStackTrace();
@@ -30,6 +30,42 @@ public class AverageDataDAO {
         }
         return list;
     }
+
+    public List<AverageData> findRowhouseByDate(int year,int month){
+        List<AverageData> list = null;
+        SqlSession session = sqlSessionFactory.openSession();
+        AverageDataMapper mapper = session.getMapper(AverageDataMapper.class);
+
+        try{
+            list=mapper.findRowhouseByDate(String.valueOf(year),String.valueOf(month));
+            session.commit();
+        }catch(Exception e){
+            e.printStackTrace();
+            session.rollback();
+        }finally {
+            session.close();
+        }
+        return list;
+    }
+
+    public List<AverageData> findDetachedhouseByDate(int year,int month){
+        List<AverageData> list = null;
+        SqlSession session = sqlSessionFactory.openSession();
+        AverageDataMapper mapper = session.getMapper(AverageDataMapper.class);
+
+        try{
+            list=mapper.findDetachedhouseByDate(String.valueOf(year),String.valueOf(month));
+            session.commit();
+        }catch(Exception e){
+            e.printStackTrace();
+            session.rollback();
+        }finally {
+            session.close();
+        }
+        return list;
+    }
+
+
 
 
 
