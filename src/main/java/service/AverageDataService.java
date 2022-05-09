@@ -1,12 +1,13 @@
 package service;
 
 import domain.AverageData;
-import domain.FluctuationLate;
+import domain.FluctuationRate;
+import domain.Population;
 import lombok.RequiredArgsConstructor;
 import persistence.dao.AverageDataDAO;
+import persistence.dao.SigunguDAO;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,8 +15,9 @@ import java.util.List;
 public class AverageDataService{
 
     private final AverageDataDAO averageDataDAO;
+    private final SigunguDAO sigunguDAO;
 
-    public List<FluctuationLate> findFluctuationLateByDate(int year, int month){
+    public List<FluctuationRate> findFluctuationLateByDate(int year, int month){
         List<AverageData> averageDataList1 = averageDataDAO.findByDate(year,month);
         List<AverageData> averageDataList2 = averageDataDAO.findByDate(year,month-1);
 
@@ -23,8 +25,8 @@ public class AverageDataService{
             averageDataList2 = averageDataDAO.findByDate(year-1,12);
         }
 
-        List<FluctuationLate> list = new ArrayList<>();
-        List<FluctuationLate> result = new ArrayList<>();
+        List<FluctuationRate> list = new ArrayList<>();
+        List<FluctuationRate> result = new ArrayList<>();
 
         for(int i = 0; i < averageDataList1.size(); i++ ) {
             float num1 = averageDataList1.get(i).getAverage();
@@ -38,16 +40,17 @@ public class AverageDataService{
                 num3 = (num1 - num2) / num2 * 100;
             }
 
-            list.add(new FluctuationLate(averageDataList1.get(i).getRegionalCode(),num3,(int)(num1 - num2)));
+            list.add(new FluctuationRate(averageDataList1.get(i).getRegionalCode(),num3,(int)(num1 - num2)));
             Collections.sort(list);
         }
 
         for(int i=0;i<20;i++){ //상위 20개만 리턴
-            FluctuationLate fluctuationLate = list.get(i);
+            FluctuationRate fluctuationLate = list.get(i);
 
             //여기에 지역 이름이랑 인구수 받는거
-            fluctuationLate.setRegionName(String.valueOf(i)+"지역");
-            fluctuationLate.setPopulation(i);
+            Population sigungu = sigunguDAO.findSigungu(fluctuationLate.getRegionalCode());
+            fluctuationLate.setRegionName(sigungu.getRegionName());
+            fluctuationLate.setPopulation(sigungu.getPopulation());
             result.add(list.get(i));
 
         }
