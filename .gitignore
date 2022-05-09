@@ -40,4 +40,3 @@ out/
 .vscode/
 
 src/main/resources/config.xml
-src/main/java/Main.java
