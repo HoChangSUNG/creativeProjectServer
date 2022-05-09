@@ -38,10 +38,11 @@ public class Main {
        //annotationBaseCode(); //어노테이션 기반 mybatis 테스트(시도 테이블 전체 출력)
 
 
-        SqlSessionFactory sqlSessionFactory = MyBatisConnectionFactory.getSqlSessionFactory();
+//        SqlSessionFactory sqlSessionFactory = MyBatisConnectionFactory.getSqlSessionFactory();
 //        AverageDataDAO averageDataDAO = new AverageDataDAO(sqlSessionFactory);
-//        AverageDataService averageDataService = new AverageDataService(averageDataDAO);
-//        List<FluctuationRate> fluctuationLateByDate = averageDataService.findFluctuationLateByDate(2022, 4);
+//        SigunguDAO sigunguDAO = new SigunguDAO(sqlSessionFactory);
+//        AverageDataService averageDataService = new AverageDataService(averageDataDAO, sigunguDAO);
+//        List<FluctuationRate> fluctuationLateByDate = averageDataService.findDetachedhouseFRByDate(2022, 4);
 //        for (FluctuationRate fluctuationLate : fluctuationLateByDate) {
 //            System.out.println(fluctuationLate);
 //        }

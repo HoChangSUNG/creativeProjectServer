@@ -2,6 +2,7 @@ package controller;
 
 import java.time.LocalDate;
 
+import body.FluctuationRateWrapper;
 import domain.FluctuationRate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,10 +46,12 @@ public class RealEstateInfoController implements Controller{
         int year = now.getYear();
         int month = now.getMonthValue()-1;
 
-        List<FluctuationRate> list2 = averageDataService.findFluctuationLateByDate(year, month);
+        FluctuationRateWrapper fluctuationRateWrapper = null;
+        fluctuationRateWrapper.setApartmentFluctuationRate(averageDataService.findApartmentFRByDate(year,month));
+        fluctuationRateWrapper.setApartmentFluctuationRate(averageDataService.findApartmentFRByDate(year,month));
+        fluctuationRateWrapper.setApartmentFluctuationRate(averageDataService.findApartmentFRByDate(year,month));
 
-
-        Packet packet = new Packet(protocolType,ProtocolCode,list2);
+        Packet packet = new Packet(protocolType,ProtocolCode,fluctuationRateWrapper);
         return packet;
     }
 

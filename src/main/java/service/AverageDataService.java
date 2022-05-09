@@ -17,17 +17,49 @@ public class AverageDataService{
     private final AverageDataDAO averageDataDAO;
     private final SigunguDAO sigunguDAO;
 
-    public List<FluctuationRate> findFluctuationLateByDate(int year, int month){
-        List<AverageData> averageDataList1 = averageDataDAO.findByDate(year,month);
+    public List<FluctuationRate> findApartmentFRByDate(int year, int month){
+        List<AverageData> averageDataList1 = averageDataDAO.findApartmentByDate(year,month);
         List<AverageData> averageDataList2 = null;
-        
+
         if(month == 1){
-            averageDataList2 = averageDataDAO.findByDate(year-1,12);
+            averageDataList2 = averageDataDAO.findApartmentByDate(year-1,12);
         }
         else {
-            averageDataList2 = averageDataDAO.findByDate(year,month-1);
+            averageDataList2 = averageDataDAO.findApartmentByDate(year,month-1);
         }
 
+        return getFluctuationRates(averageDataList1, averageDataList2);
+    }
+
+    public List<FluctuationRate> findRowhouseFRByDate(int year, int month){
+        List<AverageData> averageDataList1 = averageDataDAO.findRowhouseByDate(year,month);
+        List<AverageData> averageDataList2 = null;
+
+        if(month == 1){
+            averageDataList2 = averageDataDAO.findRowhouseByDate(year-1,12);
+        }
+        else {
+            averageDataList2 = averageDataDAO.findRowhouseByDate(year,month-1);
+        }
+
+        return getFluctuationRates(averageDataList1, averageDataList2);
+    }
+
+    public List<FluctuationRate> findDetachedhouseFRByDate(int year, int month){
+        List<AverageData> averageDataList1 = averageDataDAO.findDetachedhouseByDate(year,month);
+        List<AverageData> averageDataList2 = null;
+
+        if(month == 1){
+            averageDataList2 = averageDataDAO.findDetachedhouseByDate(year-1,12);
+        }
+        else {
+            averageDataList2 = averageDataDAO.findDetachedhouseByDate(year,month-1);
+        }
+
+        return getFluctuationRates(averageDataList1, averageDataList2);
+    }
+
+    private List<FluctuationRate> getFluctuationRates(List<AverageData> averageDataList1, List<AverageData> averageDataList2) {
         List<FluctuationRate> list = new ArrayList<>();
         List<FluctuationRate> result = new ArrayList<>();
 
@@ -43,17 +75,17 @@ public class AverageDataService{
                 fluctuationRate = (currentAverage - lastAverage) / lastAverage * 100;
             }
 
-            list.add(new FluctuationRate(averageDataList1.get(i).getRegionalCode(),fluctuationRate,(int)(currentAverage - lastAverage)));
+            list.add(new FluctuationRate(averageDataList1.get(i).getRegionalCode(),fluctuationRate,(int)(currentAverage - lastAverage), (int)currentAverage));
             Collections.sort(list);
         }
 
         for(int i=0;i<20;i++){ //상위 20개만 리턴
-            FluctuationRate fluctuationLate = list.get(i);
+            FluctuationRate fluctuationRate = list.get(i);
 
             //여기에 지역 이름이랑 인구수 받는거
-            Population sigungu = sigunguDAO.findSigungu(fluctuationLate.getRegionalCode());
-            fluctuationLate.setRegionName(sigungu.getRegionName());
-            fluctuationLate.setPopulation(sigungu.getPopulation());
+            Population sigungu = sigunguDAO.findSigungu(fluctuationRate.getRegionalCode());
+            fluctuationRate.setRegionName(sigungu.getRegionName());
+            fluctuationRate.setPopulation(sigungu.getPopulation());
             result.add(list.get(i));
 
         }
