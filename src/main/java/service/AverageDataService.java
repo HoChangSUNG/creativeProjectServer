@@ -38,14 +38,20 @@ public class AverageDataService{
                 num3 = (num1 - num2) / num2 * 100;
             }
 
-            list.add(new FluctuationLate(averageDataList1.get(i).getSidoName(),averageDataList1.get(i).getSigunguName(),averageDataList1.get(i).getDongName(), num3,averageDataList1.get(i).getPopulation(),averageDataList1.get(i).getAverage()));
+            list.add(new FluctuationLate(averageDataList1.get(i).getRegionalCode(),num3,(int)(num1 - num2)));
             Collections.sort(list);
         }
 
         for(int i=0;i<20;i++){ //상위 20개만 리턴
-            result.add(list.get(i));
-        }
+            FluctuationLate fluctuationLate = list.get(i);
 
+            //여기에 지역 이름이랑 인구수 받는거
+            fluctuationLate.setRegionName(String.valueOf(i)+"지역");
+            fluctuationLate.setPopulation(i);
+            result.add(list.get(i));
+
+        }
         return result;
     }
 }
+
