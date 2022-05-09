@@ -31,4 +31,6 @@ public class AverageDataDAO {
         return list;
     }
 
+
+
 }
