@@ -17,28 +17,31 @@ public class AverageDataService{
 
     public List<FluctuationLate> findFluctuationLateByDate(int year, int month){
         List<AverageData> averageDataList1 = averageDataDAO.findByDate(year,month);
-        List<AverageData> averageDataList2 = averageDataDAO.findByDate(year,month-1);
-
+        List<AverageData> averageDataList2 = null;
+        
         if(month == 1){
             averageDataList2 = averageDataDAO.findByDate(year-1,12);
+        }
+        else {
+            averageDataList2 = averageDataDAO.findByDate(year,month-1);
         }
 
         List<FluctuationLate> list = new ArrayList<>();
         List<FluctuationLate> result = new ArrayList<>();
 
         for(int i = 0; i < averageDataList1.size(); i++ ) {
-            float num1 = averageDataList1.get(i).getAverage();
-            float num2 = averageDataList2.get(i).getAverage();
-            float num3;
+            float currentAverage = averageDataList1.get(i).getAverage();
+            float lastAverage = averageDataList2.get(i).getAverage();
+            float fluctuationRate;
 
-            if(num2 == 0){
-                num3 = 0;
+            if(lastAverage == 0){
+                fluctuationRate = 0;
             }
             else {
-                num3 = (num1 - num2) / num2 * 100;
+                fluctuationRate = (currentAverage - lastAverage) / lastAverage * 100;
             }
 
-            list.add(new FluctuationLate(averageDataList1.get(i).getRegionalCode(),num3,(int)(num1 - num2)));
+            list.add(new FluctuationLate(averageDataList1.get(i).getRegionalCode(),fluctuationRate,(int)(currentAverage - lastAverage)));
             Collections.sort(list);
         }
 
