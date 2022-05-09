@@ -1,11 +1,21 @@
 package controller;
 
+import java.time.LocalDate;
+
+import body.SendDataResBody;
+import domain.AverageData;
+import domain.FluctuationLate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import network.Packet;
 import network.ProtocolType;
 import network.protocolCode.RealEstateInfoCode;
+import org.apache.ibatis.session.SqlSessionFactory;
+import persistence.MyBatisConnectionFactory;
+import persistence.dao.AverageDataDAO;
 import service.AverageDataService;
+
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -35,7 +45,17 @@ public class RealEstateInfoController implements Controller{
         log.info("기능 1.1 실행");
         byte protocolType = ProtocolType.REAL_ESTATE_INFO.getType();
         byte ProtocolCode = RealEstateInfoCode.SEND_DATA_RES.getCode();
-        String body = "1.1 SEND_DATA_RES";
+
+        LocalDate now = LocalDate.now();
+        int year = now.getYear();
+        int month = now.getMonthValue();
+
+        List<AverageData> list1 = averageDataService.findAverageDataByDate(year,month);
+        List<FluctuationLate> list2 = averageDataService.findFluctuationLateByDAte(year, month);
+
+        SendDataResBody body = new SendDataResBody();
+        body.setAverageDataList(list1);
+        body.setFluctuationLateList(list2);
 
         Packet packet = new Packet(protocolType,ProtocolCode,body);
         return packet;
