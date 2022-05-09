@@ -39,17 +39,6 @@ public class Main {
 
        //annotationBaseCode(); //어노테이션 기반 mybatis 테스트(시도 테이블 전체 출력)
 
-        SqlSessionFactory sqlSessionFactory = MyBatisConnectionFactory.getSqlSessionFactory();
-        AverageDataDAO aa = new AverageDataDAO(sqlSessionFactory);
-        AverageDataService a = new AverageDataService(aa);
-        List<AverageData> aaa = a.findAverageDataByDate(2022,4);
-        List<FluctuationLate> allList= a.findFluctuationLateByDAte(2022,4);
-//        for (AverageData list : aaa) {
-//           System.out.println(list.getSidoName() + list.getSigunguName() + list.getDongName() + list.getAverage());
-//        }
-        for (FluctuationLate list : allList) {
-            System.out.println(list.getSidoName() + list.getSigunguName() + list.getDongName() + list.getFluctuationLateData());
-        }
     }
 
     public static void insertApartmentData(LocalDate startDate,LocalDate endDate,String serviceKey,DBInit dbInit){
