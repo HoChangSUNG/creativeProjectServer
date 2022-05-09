@@ -1,13 +1,17 @@
 package controller;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import network.Packet;
 import network.ProtocolType;
 import network.protocolCode.RealEstateInfoCode;
+import service.AverageDataService;
 
 @Slf4j
+@RequiredArgsConstructor
 public class RealEstateInfoController implements Controller{
 
+    private final AverageDataService averageDataService;
     //1. 지역별 부동산 가격 제공 컨트롤러
     @Override
     public Packet process(Packet receivePacket) {
