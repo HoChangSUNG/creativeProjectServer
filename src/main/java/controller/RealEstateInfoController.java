@@ -46,10 +46,10 @@ public class RealEstateInfoController implements Controller{
         int year = now.getYear();
         int month = now.getMonthValue()-1;
 
-        FluctuationRateWrapper fluctuationRateWrapper = null;
+        FluctuationRateWrapper fluctuationRateWrapper = new FluctuationRateWrapper();
         fluctuationRateWrapper.setApartmentFluctuationRate(averageDataService.findApartmentFRByDate(year,month));
-        fluctuationRateWrapper.setApartmentFluctuationRate(averageDataService.findApartmentFRByDate(year,month));
-        fluctuationRateWrapper.setApartmentFluctuationRate(averageDataService.findApartmentFRByDate(year,month));
+        fluctuationRateWrapper.setApartmentFluctuationRate(averageDataService.findRowhouseFRByDate(year,month));
+        fluctuationRateWrapper.setApartmentFluctuationRate(averageDataService.findDetachedhouseFRByDate(year,month));
 
         Packet packet = new Packet(protocolType,ProtocolCode,fluctuationRateWrapper);
         return packet;
