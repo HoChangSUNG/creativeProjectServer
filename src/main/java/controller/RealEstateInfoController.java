@@ -2,9 +2,7 @@ package controller;
 
 import java.time.LocalDate;
 
-import body.SendDataResBody;
-import domain.AverageData;
-import domain.FluctuationLate;
+import domain.FluctuationRate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import network.Packet;
@@ -47,7 +45,7 @@ public class RealEstateInfoController implements Controller{
         int year = now.getYear();
         int month = now.getMonthValue();
 
-        List<FluctuationLate> list2 = averageDataService.findFluctuationLateByDate(year, month);
+        List<FluctuationRate> list2 = averageDataService.findFluctuationLateByDate(year, month);
 
 
         Packet packet = new Packet(protocolType,ProtocolCode,list2);

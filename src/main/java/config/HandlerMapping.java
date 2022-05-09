@@ -8,6 +8,7 @@ import network.ProtocolType;
 import org.apache.ibatis.session.SqlSessionFactory;
 import persistence.MyBatisConnectionFactory;
 import persistence.dao.AverageDataDAO;
+import persistence.dao.SigunguDAO;
 import service.AverageDataService;
 
 import java.util.HashMap;
@@ -30,10 +31,10 @@ public class HandlerMapping {
 
         //dao
         AverageDataDAO averageDataDAO = new AverageDataDAO(sqlSessionFactory);
-
+        SigunguDAO sigunguDAO = new SigunguDAO((sqlSessionFactory));
 
         //service
-        AverageDataService averageDataService = new AverageDataService(averageDataDAO);
+        AverageDataService averageDataService = new AverageDataService(averageDataDAO,sigunguDAO);
 
 
         // 매핑 맵에 프로토콜 코드와 컨트롤러 매핑

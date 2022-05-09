@@ -41,8 +41,8 @@ public class Main {
         SqlSessionFactory sqlSessionFactory = MyBatisConnectionFactory.getSqlSessionFactory();
 //        AverageDataDAO averageDataDAO = new AverageDataDAO(sqlSessionFactory);
 //        AverageDataService averageDataService = new AverageDataService(averageDataDAO);
-//        List<FluctuationLate> fluctuationLateByDate = averageDataService.findFluctuationLateByDate(2022, 4);
-//        for (FluctuationLate fluctuationLate : fluctuationLateByDate) {
+//        List<FluctuationRate> fluctuationLateByDate = averageDataService.findFluctuationLateByDate(2022, 4);
+//        for (FluctuationRate fluctuationLate : fluctuationLateByDate) {
 //            System.out.println(fluctuationLate);
 //        }
     }
