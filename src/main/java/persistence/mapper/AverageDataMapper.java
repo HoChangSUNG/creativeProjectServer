@@ -43,9 +43,11 @@ public interface AverageDataMapper {
             " group by regional_code,region_name"+
             " order by regional_code, region_name;"
     )
-    @Results(id="SidoSet",value={
+    @Results(id="AverageDataSet",value={
             @Result(property = "regionalCode",column = "regional_code"),
             @Result(property = "regionName",column = "region_name"),
+            @Result(property = "average",column = "average"),
+            @Result(property = "population",column = "population")
     })
     List<AverageData> findByDate(@Param("year") String year, @Param("month") String month);
 }

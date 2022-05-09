@@ -8,4 +8,5 @@ public class AverageDataService{
 
     private final AverageDataDAO averageDataDAO;
 
+
 }
