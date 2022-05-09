@@ -1,9 +1,13 @@
+import domain.AverageData;
+import domain.FluctuationLate;
 import domain.Sido;
 import domain.Sigungu;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import persistence.MyBatisConnectionFactory;
+import persistence.dao.AverageDataDAO;
 import persistence.dao.SidoDAO;
+import service.AverageDataService;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -12,7 +16,8 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
-        DBInit dbInit = new DBInit();
+        //DBInit dbInit = new DBInit();
+
         //dbInit.initRegion();
         //dbInit.initPopulation();
 //
@@ -34,6 +39,17 @@ public class Main {
 
        //annotationBaseCode(); //어노테이션 기반 mybatis 테스트(시도 테이블 전체 출력)
 
+        SqlSessionFactory sqlSessionFactory = MyBatisConnectionFactory.getSqlSessionFactory();
+        AverageDataDAO aa = new AverageDataDAO(sqlSessionFactory);
+        AverageDataService a = new AverageDataService(aa);
+        List<AverageData> aaa = a.findAverageDataByDate(2022,4);
+        List<FluctuationLate> allList= a.findFluctuationLateByDAte(2022,4);
+//        for (AverageData list : aaa) {
+//           System.out.println(list.getSidoName() + list.getSigunguName() + list.getDongName() + list.getAverage());
+//        }
+        for (FluctuationLate list : allList) {
+            System.out.println(list.getSidoName() + list.getSigunguName() + list.getDongName() + list.getFluctuationLateData());
+        }
     }
 
     public static void insertApartmentData(LocalDate startDate,LocalDate endDate,String serviceKey,DBInit dbInit){

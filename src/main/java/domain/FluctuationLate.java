@@ -6,13 +6,9 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
-public class AverageData {
-
+public class FluctuationLate {
     private String sidoName;
     private String sigunguName;
     private String dongName;
-    private int average;
-    private int population;
-
-
+    private float fluctuationLateData;
 }
