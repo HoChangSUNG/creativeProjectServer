@@ -13,11 +13,8 @@ import java.io.Serializable;
 @Setter
 public class AverageData implements Serializable {
 
-    private String sidoName;
-    private String sigunguName;
-    private String dongName;
+    private String regionalCode;
     private int average;
-    private int population;
 
 
 }
