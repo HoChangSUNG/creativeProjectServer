@@ -102,11 +102,12 @@ public class DBInit {
                         pstmt.addBatch();
                     }
                 }
-                pstmt.executeBatch();
-                conn.commit();
-                pstmt.clearBatch();
+
             }
 
+            pstmt.executeBatch();
+            conn.commit();
+            pstmt.clearBatch();
 
         } catch (Exception e) {
             e.printStackTrace();
