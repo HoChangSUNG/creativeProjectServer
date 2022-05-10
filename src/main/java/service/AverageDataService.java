@@ -28,7 +28,7 @@ public class AverageDataService{
             averageDataList2 = averageDataDAO.findApartmentByDate(year,month-1);
         }
 
-        return getFluctuationRates(averageDataList1, averageDataList2);
+        return getFluctuationRates(averageDataList1, averageDataList2, 40);
     }
 
     public List<FluctuationRate> findRowhouseFRByDate(int year, int month){
@@ -42,7 +42,7 @@ public class AverageDataService{
             averageDataList2 = averageDataDAO.findRowhouseByDate(year,month-1);
         }
 
-        return getFluctuationRates(averageDataList1, averageDataList2);
+        return getFluctuationRates(averageDataList1, averageDataList2, 30);
     }
 
     public List<FluctuationRate> findDetachedhouseFRByDate(int year, int month){
@@ -56,10 +56,10 @@ public class AverageDataService{
             averageDataList2 = averageDataDAO.findDetachedhouseByDate(year,month-1);
         }
 
-        return getFluctuationRates(averageDataList1, averageDataList2);
+        return getFluctuationRates(averageDataList1, averageDataList2, 10);
     }
 
-    private List<FluctuationRate> getFluctuationRates(List<AverageData> averageDataList1, List<AverageData> averageDataList2) {
+    private List<FluctuationRate> getFluctuationRates(List<AverageData> averageDataList1, List<AverageData> averageDataList2, int minPriceCnt) {
         List<FluctuationRate> list = new ArrayList<>();
         List<FluctuationRate> result = new ArrayList<>();
 
@@ -75,9 +75,17 @@ public class AverageDataService{
                 fluctuationRate = (currentAverage - lastAverage) / lastAverage * 100;
             }
 
-            list.add(new FluctuationRate(averageDataList1.get(i).getRegionalCode(),fluctuationRate,(int)(currentAverage - lastAverage), (int)currentAverage));
-            Collections.sort(list);
+            int currentPriceCnt = averageDataList1.get(i).getPriceCnt();
+            int lastPriceCnt = averageDataList2.get(i).getPriceCnt();
+
+            if (currentPriceCnt < minPriceCnt || lastPriceCnt < minPriceCnt) {
+                continue;
+            }
+
+            list.add(new FluctuationRate(averageDataList1.get(i).getRegionalCode(),fluctuationRate,(int)(currentAverage - lastAverage), (int)currentAverage, currentPriceCnt, lastPriceCnt));
         }
+
+        Collections.sort(list);
 
         for(int i=0;i<20;i++){ //상위 20개만 리턴
             FluctuationRate fluctuationRate = list.get(i);
@@ -87,7 +95,6 @@ public class AverageDataService{
             fluctuationRate.setRegionName(sigungu.getRegionName());
             fluctuationRate.setPopulation(sigungu.getPopulation());
             result.add(list.get(i));
-
         }
         return result;
     }
