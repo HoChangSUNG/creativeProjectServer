@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.*;
 import java.util.List;
 
 public interface AverageDataMapper {
-    @Select("select ifnull(floor(sum(price_sum)/sum(price_cnt)),0) average, regional_code\n" +
+    @Select("select ifnull(floor(sum(price_sum)/sum(price_cnt)),0) average, regional_code, price_cnt\n" +
             "from\n" +
             "(\n" +
             "select b.regional_code, ifnull(s,0) price_sum, ifnull(c,0) price_cnt from (\n" +
@@ -23,11 +23,12 @@ public interface AverageDataMapper {
     )
     @Results(id ="AverageDataSet", value = {
             @Result(property = "average",column = "average"),
-            @Result(property = "regionalCode",column = "regional_code")
+            @Result(property = "regionalCode",column = "regional_code"),
+            @Result(property = "priceCnt", column = "price_cnt")
     })
     List<AverageData> findApartmentByDate(@Param("year") String year, @Param("month") String month);
 
-    @Select("select ifnull(floor(sum(price_sum)/sum(price_cnt)),0) average, regional_code\n" +
+    @Select("select ifnull(floor(sum(price_sum)/sum(price_cnt)),0) average, regional_code, price_cnt\n" +
             "from\n" +
             "(\n" +
             "select b.regional_code, ifnull(s,0) price_sum, ifnull(c,0) price_cnt from (\n" +
@@ -44,7 +45,7 @@ public interface AverageDataMapper {
     @ResultMap("AverageDataSet")
     List<AverageData> findRowhouseByDate(@Param("year") String year, @Param("month") String month);
 
-    @Select("select ifnull(floor(sum(price_sum)/sum(price_cnt)),0) average, regional_code\n" +
+    @Select("select ifnull(floor(sum(price_sum)/sum(price_cnt)),0) average, regional_code, price_cnt\n" +
             "from\n" +
             "(\n" +
             "select b.regional_code, ifnull(s,0) price_sum, ifnull(c,0) price_cnt from (\n" +
