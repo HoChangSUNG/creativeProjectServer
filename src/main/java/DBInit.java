@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Slf4j
 public class DBInit {
@@ -42,13 +43,18 @@ public class DBInit {
     }
 
     private String getTagValue(String tag, Element element) {
-        NodeList nodeList = element.getElementsByTagName(tag).item(0).getChildNodes();
-        Node item = (Node) nodeList.item(0);
-        if (item == null) {
-            return null;
+        try{
+            NodeList nodeList = element.getElementsByTagName(tag).item(0).getChildNodes();
+            Node item = (Node) nodeList.item(0);
+
+            return item.getTextContent();
+        }catch (NullPointerException e){
+            if(tag.equals("건축년도"))//"건축년도" 태그가 api에 없는 경우.
+                return "0";
+            else
+                throw new NoSuchElementException(tag+"가 호출한 api에 없는 태그입니다.");// 해당 tag 이름이 없는 경우.
         }
 
-        return item.getTextContent();
     }
 
     public void initApartment(LocalDate startDate, LocalDate endDate, String lawd_cd, String serviceKey) { // 아파트 실거래 openApi 정보 db에 저장
