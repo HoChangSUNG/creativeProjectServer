@@ -4,11 +4,13 @@ import java.time.LocalDate;
 
 import body.FluctuationRateWrapper;
 import domain.FluctuationRate;
+import domain.Sido;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import network.Packet;
 import network.ProtocolType;
 import network.protocolCode.RealEstateInfoCode;
+import persistence.dao.SidoDAO;
 import service.AverageDataService;
 
 import java.util.List;
@@ -19,6 +21,7 @@ public class RealEstateInfoController implements Controller{
 
     private final AverageDataService averageDataService;
     //1. 지역별 부동산 가격 제공 컨트롤러
+    private final SidoDAO sidoDAO;
     @Override
     public Packet process(Packet receivePacket) {
         log.info("RealEstateInfoController 입니다.");
@@ -30,6 +33,9 @@ public class RealEstateInfoController implements Controller{
         }
         else if(protocolCode == RealEstateInfoCode.SEND_GRAPH_DATA_REQ.getCode()){ //기능 1.2
             packet = sendGraphDataPacket(receivePacket);
+        }
+        else if(protocolCode == RealEstateInfoCode.REGION_SELECTION_REQ.getCode()){
+            packet = sendSelectRegionList(receivePacket);
         }
         else{
             throw new RuntimeException("존재하지 않는 코드입니다");
@@ -63,5 +69,15 @@ public class RealEstateInfoController implements Controller{
 
         Packet packet = new Packet(protocolType,ProtocolCode,body);
         return packet;
+    }
+
+    private Packet sendSelectRegionList(Packet receivePacket){
+        log.info("지역 선택 리스트 전달");
+        byte protocolType = ProtocolType.REAL_ESTATE_INFO.getType();
+        byte ProtocolCode = RealEstateInfoCode.REGION_SELECTION_RES.getCode();
+
+        List<Sido> selectRegionList = sidoDAO.findSelectRegionList();
+
+        return new Packet(protocolType,ProtocolCode,selectRegionList);
     }
 }

@@ -1,10 +1,12 @@
 package persistence.dao;
 
 import domain.Sido;
+import domain.Sigungu;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import persistence.mapper.SidoMapper;
+import persistence.mapper.SigunguMapper;
 
 import java.util.List;
 
@@ -28,4 +30,21 @@ public class SidoDAO {
         }
         return list;
     }
+
+    public List<Sido> findSelectRegionList(){ // 지역 선택 list
+        List<Sido> list = null;
+        SqlSession session = sqlSessionFactory.openSession();
+        SidoMapper mapper = session.getMapper(SidoMapper.class);
+        try{
+            list=mapper.findJoinSido();
+            session.commit();
+        }catch(Exception e){
+            e.printStackTrace();
+            session.rollback();
+        }finally {
+            session.close();
+        }
+        return list;
+    }
+
 }

@@ -8,6 +8,7 @@ import network.ProtocolType;
 import org.apache.ibatis.session.SqlSessionFactory;
 import persistence.MyBatisConnectionFactory;
 import persistence.dao.AverageDataDAO;
+import persistence.dao.SidoDAO;
 import persistence.dao.SigunguDAO;
 import service.AverageDataService;
 
@@ -31,21 +32,21 @@ public class HandlerMapping {
 
         //dao
         AverageDataDAO averageDataDAO = new AverageDataDAO(sqlSessionFactory);
-        SigunguDAO sigunguDAO = new SigunguDAO((sqlSessionFactory));
+        SigunguDAO sigunguDAO = new SigunguDAO(sqlSessionFactory);
+        SidoDAO sidoDAO = new SidoDAO(sqlSessionFactory);
 
         //service
         AverageDataService averageDataService = new AverageDataService(averageDataDAO,sigunguDAO);
 
 
         // 매핑 맵에 프로토콜 코드와 컨트롤러 매핑
-        Controller realEstateInfoController = new RealEstateInfoController(averageDataService);
+        Controller realEstateInfoController = new RealEstateInfoController(averageDataService,sidoDAO);
         Controller realEstateCompareController = new RealEstateCompareController();
         Controller realEstateRecommendController = new RealEstateRecommendController();
 
         handlerMappingMap.put(ProtocolType.REAL_ESTATE_INFO.getType(),realEstateInfoController);
         handlerMappingMap.put(ProtocolType.REAL_ESTATE_COMPARE.getType(), realEstateCompareController);
         handlerMappingMap.put(ProtocolType.REAL_ESTATE_RECOMMEND.getType(), realEstateRecommendController);
-
-
+        
     }
 }
