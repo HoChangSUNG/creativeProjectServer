@@ -7,6 +7,7 @@ import controller.RealEstateRecommendController;
 import network.ProtocolType;
 import org.apache.ibatis.session.SqlSessionFactory;
 import persistence.MyBatisConnectionFactory;
+import persistence.dao.ApartmentIndexDAO;
 import persistence.dao.AverageDataDAO;
 import persistence.dao.SidoDAO;
 import persistence.dao.SigunguDAO;
@@ -34,13 +35,14 @@ public class HandlerMapping {
         AverageDataDAO averageDataDAO = new AverageDataDAO(sqlSessionFactory);
         SigunguDAO sigunguDAO = new SigunguDAO(sqlSessionFactory);
         SidoDAO sidoDAO = new SidoDAO(sqlSessionFactory);
+        ApartmentIndexDAO apartmentIndexDAO = new ApartmentIndexDAO(sqlSessionFactory);
 
         //service
         AverageDataService averageDataService = new AverageDataService(averageDataDAO,sigunguDAO);
 
 
         // 매핑 맵에 프로토콜 코드와 컨트롤러 매핑
-        Controller realEstateInfoController = new RealEstateInfoController(averageDataService,sidoDAO);
+        Controller realEstateInfoController = new RealEstateInfoController(averageDataService,sidoDAO, apartmentIndexDAO);
         Controller realEstateCompareController = new RealEstateCompareController();
         Controller realEstateRecommendController = new RealEstateRecommendController();
 

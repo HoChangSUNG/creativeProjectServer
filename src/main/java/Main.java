@@ -2,6 +2,7 @@ import domain.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import persistence.MyBatisConnectionFactory;
+import persistence.dao.ApartmentIndexDAO;
 import persistence.dao.AverageDataDAO;
 import persistence.dao.SidoDAO;
 import persistence.dao.SigunguDAO;
@@ -37,8 +38,6 @@ public class Main {
 
        //annotationBaseCode(); //어노테이션 기반 mybatis 테스트(시도 테이블 전체 출력)
 
-
-//        SqlSessionFactory sqlSessionFactory = MyBatisConnectionFactory.getSqlSessionFactory();
 //        AverageDataDAO averageDataDAO = new AverageDataDAO(sqlSessionFactory);
 //        SigunguDAO sigunguDAO = new SigunguDAO(sqlSessionFactory);
 //        AverageDataService averageDataService = new AverageDataService(averageDataDAO, sigunguDAO);
