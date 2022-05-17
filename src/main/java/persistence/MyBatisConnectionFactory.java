@@ -3,10 +3,7 @@ package persistence;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import persistence.mapper.AverageDataMapper;
-import persistence.mapper.EupMyeonDongMapper;
-import persistence.mapper.SidoMapper;
-import persistence.mapper.SigunguMapper;
+import persistence.mapper.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -27,7 +24,8 @@ public class MyBatisConnectionFactory {
                         SidoMapper.class,
                         AverageDataMapper.class,
                         SigunguMapper.class,
-                        EupMyeonDongMapper.class
+                        EupMyeonDongMapper.class,
+                        ApartmentIndexMapper.class
                         //mapper들  추가
                 };
                 for(Class mapper: mappers){
