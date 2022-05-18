@@ -24,6 +24,7 @@ public class MyBatisConnectionFactory {
                         SidoMapper.class,
                         AverageDataMapper.class,
                         SigunguMapper.class,
+                        ApartmentMapper.class,
                         EupMyeonDongMapper.class,
                         ApartmentIndexMapper.class
                         //mapper들  추가
