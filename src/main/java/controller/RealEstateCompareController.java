@@ -1,9 +1,6 @@
 package controller;
 
-import domain.Apartment;
-import domain.ApartmentInfo1;
-import domain.EupMyeonDong;
-import domain.Sigungu;
+import domain.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import network.Packet;
@@ -40,11 +37,12 @@ public class RealEstateCompareController implements Controller{
         byte protocolType = ProtocolType.REAL_ESTATE_COMPARE.getType();
         byte ProtocolCode = RealEstateCompareCode.REAL_ESTATE_APARTMENT_RES.getCode();
 
-        Sigungu sigungu = null;
-        sigungu = (Sigungu) receivePacket.getBody();
+        SelectApartRegion selectApartRegion = (SelectApartRegion) receivePacket.getBody();
 
+
+        log.info("선택된 시군구 : {}, 선택된 읍면동 : {}",selectApartRegion.getSigunguName(),selectApartRegion.getEupmyeondongName());
         List<ApartmentInfo1> apartmentList = null;
-        apartmentList = apartmentDAO.findApartment(sigungu.getEupMyeonDongList().get(sigungu.getEupMyeonDongIndex()).getRegionName(), sigungu.getRegionalCode());
+        apartmentList = apartmentDAO.findApartment(selectApartRegion.getEupmyeondongName(), selectApartRegion.getSigunguRegionCode());
 
         Packet packet = new Packet(protocolType,ProtocolCode,apartmentList);
         return packet;
