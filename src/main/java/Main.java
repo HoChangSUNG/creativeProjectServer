@@ -1,12 +1,15 @@
 import domain.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.logging.log4j.core.util.JsonUtils;
 import persistence.MyBatisConnectionFactory;
+import persistence.dao.AverageAreaAmoumtApartmentDAO;
 import persistence.dao.ApartmentDAO;
 import persistence.dao.ApartmentIndexDAO;
 import persistence.dao.AverageDataDAO;
 import persistence.dao.SidoDAO;
 import persistence.dao.SigunguDAO;
+import service.AverageAreaAoumtApartmentService;
 import service.AverageDataService;
 
 import java.time.LocalDate;
@@ -40,7 +43,7 @@ public class Main {
        //annotationBaseCode(); //어노테이션 기반 mybatis 테스트(시도 테이블 전체 출력)
 
 
-//        SqlSessionFactory sqlSessionFactory = MyBatisConnectionFactory.getSqlSessionFactory();
+        SqlSessionFactory sqlSessionFactory = MyBatisConnectionFactory.getSqlSessionFactory();
 //        AverageDataDAO averageDataDAO = new AverageDataDAO(sqlSessionFactory);
 //        SigunguDAO sigunguDAO = new SigunguDAO(sqlSessionFactory);
 //        AverageDataService averageDataService = new AverageDataService(averageDataDAO, sigunguDAO);
@@ -48,6 +51,13 @@ public class Main {
 //        for (FluctuationRate fluctuationLate : fluctuationLateByDate) {
 //            System.out.println(fluctuationLate);
 //        }
+        AverageAreaAmoumtApartmentDAO averageAreaAmoumtApartmentDAO = new AverageAreaAmoumtApartmentDAO(sqlSessionFactory);
+        AverageAreaAoumtApartmentService averageAreaAoumtApartmentService = new AverageAreaAoumtApartmentService(averageAreaAmoumtApartmentDAO);
+        ApartmentForSearch apartmentForSearch = new ApartmentForSearch("48250","내동");
+        List<AverageAreaAmoumtApartmentData> temp = averageAreaAoumtApartmentService.findApartmentAoumtdata(apartmentForSearch);
+        for(AverageAreaAmoumtApartmentData a : temp){
+            System.out.println(a.toString());
+        }
     }
 
     public static void insertApartmentData(LocalDate startDate,LocalDate endDate,String serviceKey,DBInit dbInit){

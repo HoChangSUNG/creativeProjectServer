@@ -1,14 +1,20 @@
 package controller;
 
+import body.SendDataResBody;
+import domain.ApartmentForSearch;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import network.Packet;
 import network.ProtocolType;
 import network.protocolCode.RealEstateInfoCode;
 import network.protocolCode.RealEstateRecommendCode;
+import service.AverageAreaAoumtApartmentService;
 
+@RequiredArgsConstructor
 @Slf4j
 public class RealEstateRecommendController implements Controller{
 
+    private final AverageAreaAoumtApartmentService averageAreaAoumtApartmentService;
     //3. 부동산 추천 컨트롤러
     @Override
     public Packet process(Packet receivePacket) {
@@ -32,9 +38,12 @@ public class RealEstateRecommendController implements Controller{
         log.info("기능 3.1 실행");
         byte protocolType = ProtocolType.REAL_ESTATE_RECOMMEND.getType();
         byte ProtocolCode = RealEstateRecommendCode.RECORD_INFO_RES.getCode();
-        String body = "3.1 RECORD_INFO_RES";
 
-        Packet packet = new Packet(protocolType,ProtocolCode,body);
+        ApartmentForSearch apartmentForSearch = (ApartmentForSearch)receivePacket.getBody();
+
+        SendDataResBody sendDataResBody = new SendDataResBody();
+        sendDataResBody.setAverageAreaAmoumtApartmentList(averageAreaAoumtApartmentService.findApartmentAoumtdata(apartmentForSearch));
+        Packet packet = new Packet(protocolType,ProtocolCode,sendDataResBody);
         return packet;
     }
     private Packet regionRecommendPacket(Packet receivePacket) {

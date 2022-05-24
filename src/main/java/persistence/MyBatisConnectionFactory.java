@@ -24,6 +24,8 @@ public class MyBatisConnectionFactory {
                         SidoMapper.class,
                         AverageDataMapper.class,
                         SigunguMapper.class,
+                        EupMyeonDongMapper.class,
+                        AverageAreaAmoumtApartmentMapper.class,
                         ApartmentMapper.class,
                         EupMyeonDongMapper.class,
                         ApartmentIndexMapper.class
