@@ -2,6 +2,7 @@ package persistence.dao;
 
 import domain.Apartment;
 import domain.ApartmentInfo1;
+import domain.ApartmentInfo3;
 import domain.AverageData;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.annotations.Param;
@@ -25,6 +26,23 @@ public class ApartmentDAO {
 
         try{
             list=mapper.findApartment(regionName,regionalCode);
+            session.commit();
+        }catch(Exception e){
+            e.printStackTrace();
+            session.rollback();
+        }finally {
+            session.close();
+        }
+        return list;
+    }
+
+    public List<ApartmentInfo3> findApartmentInfo(float area, String apartmentName, String regionalCode, String regionName){
+        List<ApartmentInfo3> list = null;
+        SqlSession session = sqlSessionFactory.openSession();
+        ApartmentMapper mapper = session.getMapper(ApartmentMapper.class);
+
+        try{
+            list=mapper.findApartmentInfo(area,apartmentName,regionalCode,regionName);
             session.commit();
         }catch(Exception e){
             e.printStackTrace();
