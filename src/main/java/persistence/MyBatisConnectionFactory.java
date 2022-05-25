@@ -27,7 +27,6 @@ public class MyBatisConnectionFactory {
                         EupMyeonDongMapper.class,
                         AverageAreaAmoumtApartmentMapper.class,
                         ApartmentMapper.class,
-                        EupMyeonDongMapper.class,
                         ApartmentIndexMapper.class
                         //mapper들  추가
                 };

@@ -43,7 +43,7 @@ public class Main {
        //annotationBaseCode(); //어노테이션 기반 mybatis 테스트(시도 테이블 전체 출력)
 
 
-        SqlSessionFactory sqlSessionFactory = MyBatisConnectionFactory.getSqlSessionFactory();
+//        SqlSessionFactory sqlSessionFactory = MyBatisConnectionFactory.getSqlSessionFactory();
 //        AverageDataDAO averageDataDAO = new AverageDataDAO(sqlSessionFactory);
 //        SigunguDAO sigunguDAO = new SigunguDAO(sqlSessionFactory);
 //        AverageDataService averageDataService = new AverageDataService(averageDataDAO, sigunguDAO);
@@ -51,13 +51,13 @@ public class Main {
 //        for (FluctuationRate fluctuationLate : fluctuationLateByDate) {
 //            System.out.println(fluctuationLate);
 //        }
-        AverageAreaAmoumtApartmentDAO averageAreaAmoumtApartmentDAO = new AverageAreaAmoumtApartmentDAO(sqlSessionFactory);
-        AverageAreaAoumtApartmentService averageAreaAoumtApartmentService = new AverageAreaAoumtApartmentService(averageAreaAmoumtApartmentDAO);
-        ApartmentForSearch apartmentForSearch = new ApartmentForSearch("48250","내동");
-        List<AverageAreaAmoumtApartmentData> temp = averageAreaAoumtApartmentService.findApartmentAoumtdata(apartmentForSearch);
-        for(AverageAreaAmoumtApartmentData a : temp){
-            System.out.println(a.toString());
-        }
+//        AverageAreaAmoumtApartmentDAO averageAreaAmoumtApartmentDAO = new AverageAreaAmoumtApartmentDAO(sqlSessionFactory);//       AverageAreaAoumtApartmentService averageAreaAoumtApartmentService = new AverageAreaAoumtApartmentService(averageAreaAmoumtApartmentDAO);
+//        ApartmentForSearch apartmentForSearch = new ApartmentForSearch("48250","내동");
+//        List<AverageAreaAmoumtApartmentData> temp = averageAreaAoumtApartmentService.findApartmentAoumtdata(apartmentForSearch);
+//        for(AverageAreaAmoumtApartmentData a : temp){
+//            System.out.println(a.toString());
+//
+//       }
     }
 
     public static void insertApartmentData(LocalDate startDate,LocalDate endDate,String serviceKey,DBInit dbInit){
