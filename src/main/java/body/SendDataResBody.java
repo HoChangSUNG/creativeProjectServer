@@ -1,10 +1,6 @@
 package body;
 
-import domain.Apartment;
-import domain.ApartmentInfo1;
-import domain.AverageAreaAmoumtApartmentData;
-import domain.AverageData;
-import domain.FluctuationRate;
+import domain.*;
 import lombok.*;
 
 import java.io.Serializable;
@@ -19,4 +15,5 @@ public class SendDataResBody implements Serializable {
     private  List<FluctuationRate> fluctuationLateList;
     private List<AverageAreaAmoumtApartmentData> averageAreaAmoumtApartmentList;
     private List<ApartmentInfo1> apartmentList;
+    private List<ApartmentInfo3> apartmentInfoList;
 }
