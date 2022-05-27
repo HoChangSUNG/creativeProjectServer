@@ -11,9 +11,9 @@ public interface AverageAreaAmoumtApartmentMapper {
         @Select("select avg(a) avg,count(a) cnt,deal_year ,deal_month\n"+
                 "from (SELECT deal_year,deal_month, deal_amount/area a ,region_name,regional_code\n"+
                         "FROM apartment\n"+
-                        "where regional_code=#{regionalCode} and region_name=#{regionName} and deal_year>2020 \n"+
+                        "where regional_code=#{regionalCode} and region_name=#{regionName} \n"+
                         "order by deal_month) temp\n"+
-                "group by deal_month,region_name,regional_code\n"+
+                "group by deal_year,deal_month,region_name,regional_code\n"+
                 "order by deal_year,deal_month;"
         )
         @Results(id ="AverageAreaAmoumtApartmentData", value = {

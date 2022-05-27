@@ -10,6 +10,9 @@ import network.protocolCode.RealEstateInfoCode;
 import network.protocolCode.RealEstateRecommendCode;
 import service.AverageAreaAoumtApartmentService;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @RequiredArgsConstructor
 @Slf4j
 public class RealEstateRecommendController implements Controller{

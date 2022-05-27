@@ -11,14 +11,14 @@ import java.util.List;
 public interface ApartmentMapper {
 
 
-    @Select("SELECT DISTINCT apartment_name,area FROM APARTMENT WHERE region_name =#{regionName} and regional_code =#{regionalCode} ORDER BY apartment_name,area")
+    @Select("SELECT DISTINCT apartment_name,truncate(area,0) as area FROM APARTMENT WHERE region_name =#{regionName} and regional_code =#{regionalCode} ORDER BY apartment_name,area")
     @Results(id="ApartmentList1",value={
             @Result(property = "apartmentName",column = "apartment_name"),
             @Result(property = "area",column = "area")
     })
     List<ApartmentInfo1> findApartment(@Param("regionName") String regionName, @Param("regionalCode") String regionalCode);
 
-    @Select("SELECT deal_year,deal_month,apartment_name,area,avg(deal_amount),count(deal_amount) from apartment where truncate(area,0) = #{area} and apartment_name =#{apartmentName}  and regional_code = #{regionalCode} and region_name  = #{regionName} group by apartment_name,regional_code,area,deal_year,deal_month;")
+    @Select("SELECT distinct deal_year,deal_month,apartment_name,truncate(area,0) as area,avg(deal_amount),count(deal_amount) from apartment where truncate(area,0) = #{area} and apartment_name =#{apartmentName}  and regional_code = #{regionalCode} and region_name  = #{regionName} group by apartment_name,regional_code,truncate(area,0),deal_year,deal_month ORDER BY deal_year,deal_month;")
     @Results(id="ApartmentList2",value={
             @Result(property = "dealYear",column = "deal_year"),
             @Result(property = "dealMonth",column = "deal_month"),
