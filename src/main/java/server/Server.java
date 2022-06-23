@@ -20,7 +20,7 @@ public class Server {
     private static int handlersIndex;
 
     public Server() {
-        handlersSize = 10;
+        handlersSize = 3;
         handlers = new ClientHandler[handlersSize];
         handlersIndex = 0;
     }
@@ -46,7 +46,6 @@ public class Server {
             log.info("클라이언트 접속 port 번호 = {} Client handler ID = {}",socket.getPort(),handlerId);
 
             startClientHandler(socket, handlerId, mappingMap); //클라이언트 핸들러 생성, 실행
-
         }
     }
 
@@ -76,7 +75,7 @@ public class Server {
             return;
         }
 
-        for(int i=curIndex;i<handlersIndex;i++){
+        for(int i=curIndex;i<handlersIndex-1;i++){
             handlers[curIndex] = handlers[curIndex+1];
         }
 
