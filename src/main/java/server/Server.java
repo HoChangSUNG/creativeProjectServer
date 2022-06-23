@@ -38,6 +38,7 @@ public class Server {
         serverSocket.bind(address);
 
         log.info("클라이언트 접속 대기중");
+        log.info("현재 실행되는 핸들러 개수 = {}\n",handlersIndex);
 
         while (true){
             socket = serverSocket.accept(); //클라이언트용 소켓 생성
