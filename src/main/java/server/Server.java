@@ -57,6 +57,8 @@ public class Server {
 
         handlers[handlersIndex] = new ClientHandler(mappingMap, socket, handlerId);//clientHandler 쓰레드 생성
         handlers[handlersIndex++].start(); //쓰레드 실행
+        log.info("현재 실행되는 핸들러 개수 = {}\n",handlersIndex);
+
     }
 
     private static int findHandlerIndex(String uuid){
@@ -81,7 +83,7 @@ public class Server {
 
         handlersIndex--;
         log.info("핸들러 제거 완료 ID = {}",uuid);
-
+        log.info("현재 실행되는 핸들러 개수 = {}\n",handlersIndex);
     }
 
     public static void main(String[] args) throws IOException {

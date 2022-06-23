@@ -58,8 +58,6 @@ public class ClientHandler extends Thread{
             exit(); // socket 종료
             Server.deleteClientHandler(uuid);
         }
-
-        log.info("Client Handler 종료. Client handler ID = {}",uuid);
     }
 
     private Controller getController(byte protocolCode) {
