@@ -12,7 +12,7 @@
 
 ## 서버 구조
 
-[서버 구조 설명, 프로젝트에 새로 적용해본 ](https://velog.io/@hochang/%EC%84%9C%EB%B2%84-%EA%B5%AC%EC%A1%B0-%EB%B3%80%EA%B2%BD-%EB%B0%8F-%EA%B0%9C%EC%84%A0%EC%A0%90)
+[서버 구조 설명, 프로젝트에 새로 적용해본 내용](https://velog.io/@hochang/%EC%84%9C%EB%B2%84-%EA%B5%AC%EC%A1%B0-%EB%B3%80%EA%B2%BD-%EB%B0%8F-%EA%B0%9C%EC%84%A0%EC%A0%90)
 
 ![image](https://velog.velcdn.com/images/hochang/post/d09d73a4-aedc-4677-848d-d64aefb5af2b/image.png)
 
