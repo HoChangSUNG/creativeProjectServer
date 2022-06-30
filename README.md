@@ -8,7 +8,7 @@
 
 [주제 제안서 및 제약 사항](https://velog.io/@hochang/%EC%A3%BC%EC%A0%9C-%EC%A0%9C%EC%95%88%EC%84%9C)  
 [중간 발표](https://velog.io/@hochang/%EC%B0%BD%EC%9D%98%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EC%A4%91%EA%B0%84-%EB%B0%9C%ED%91%9C)  
-[최종 발표]https://velog.io/@hochang/%EC%B0%BD%EC%9D%98%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EC%B5%9C%EC%A2%85-%EB%B0%9C%ED%91%9C)  
+[최종 발표](https://velog.io/@hochang/%EC%B0%BD%EC%9D%98%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EC%B5%9C%EC%A2%85-%EB%B0%9C%ED%91%9C)  
 [서버 구조 설명, 프로젝트에 새로 적용해본 내용](https://velog.io/@hochang/%EC%84%9C%EB%B2%84-%EA%B5%AC%EC%A1%B0-%EB%B3%80%EA%B2%BD-%EB%B0%8F-%EA%B0%9C%EC%84%A0%EC%A0%90)
 
 ## 서버 구조
